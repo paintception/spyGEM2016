@@ -23,32 +23,33 @@ class DNA_Analysis(object):
 	'C','T','A','A','G','T','G','A','T','T','A','C','A','C','T','G','C','T','A','A','G','A','G','A','T','G','A','A','G','C','A','T','T','G','C',
 	'A','C','C','C','A','C','C','G','A','C']
 	
-	def random_mutation(original_g):
+	def random_mutation(g):
+		
+		print "Original genome", g
 		
 		mutation_rate = 2
 		indexes_to_mutate = []
 
 		for i in xrange(0,mutation_rate):
-			index = random.randint(0,len(original_g)-1)
+			index = random.randint(0,len(g)-1)
 			indexes_to_mutate.append(index)
 
-		for i in xrange(0,len(original_g)):
+		for i in xrange(0,len(g)):
 			for j in indexes_to_mutate:
 				if i == j:
-					if original_g[i] == 'A':
+					if g[i] == 'A':
+						g[i] = 'T'
+					elif g[i] == 'T':
 						pass
-					elif original_g[i] == 'T':
+					elif g[i] == 'C':
 						pass
-					elif original_g[i] == 'C':
+					elif g[i] == 'G':
 						pass
-					elif original_g[i] == 'G':
-						pass
+
+		print "Mutated genome", g
 
 	def check_genomes(original_g, mutated_g):
-		
-		print "Original Genome", original_g
-		print "Mutated Genome", mutated_g
-
+	
 		random_mutation_indexes = []
 		random_mutation_values = []
 
@@ -60,7 +61,7 @@ class DNA_Analysis(object):
 		print "Mutated components", random_mutation_values
 		print "Position", random_mutation_indexes
 
-		return random_mutation_values, random_mutation_indexes
+		return random_mutation_values, random_mutation_indexes	#important for checking if the indexes are the same ones of where the message is placed
 
 	def message_mutation():
 		pass
@@ -96,7 +97,7 @@ class DNA_Analysis(object):
 
 		original_g = ['A','T','T','C','G','T']
 		mutated_g = random_mutation(original_g)
-		mutated_g = ['T','T','T','C','T','T']
+
 
 		check_genomes(original_g, mutated_g)
 
