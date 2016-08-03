@@ -1,6 +1,6 @@
 import numpy as np 
 import random
-from matplotlib import pyplot as plt
+#from matplotlib import pyplot as plt
 
 
 class DNA_Analysis(object):
@@ -16,16 +16,54 @@ class DNA_Analysis(object):
 	'A','A','A','C','T','T','T','G','A','A','G','T','C','T','T','T','A','A','G','A','A','T','T','A','G','T','A','T','T','A','A','G','A','A',
 	'G','T','G','A','T','G','A','A','G','G','G','C','T','A','T','G','C','C','A','C','C','C','T','C','C','T','A','G','A','G','A','C','A','G','C',
 	'T','A','T','A','A','G','C','T','C','T','T','A','A','G','G','A','G','T','G','A','A','G','C','T','G','T','T','G','A','A','T','A','A','G',
-	'G','C','G','T','A','G','T','A','G','A','A','G','C','A','A','T','T','A','A','G','T','C','C','T','G','A','A','G','T', 'T','C','T','G','A',
+	'G','C','G','T','A','G','T','A','G','A','A','G','C','A','A','T','T','A','A','G','T','C','C','T','G','A','A','G','T','T','C','T','G','A',
 	'A','G','C','T','G','T','T','G','A','C','G','A','A','G','A','T','A','A','A','A','C','T','C','T','G','A','A','T','A','A','T','A','A','G','A',
 	'C','C','T','A','C','T','A','T','A','A','G','T','G','C','T','G','A','A','G','C','G','T','T','G','A', 'A','G','A','G','A','T','A','A','G','A',
 	'C','A','G','A','G','A','A','G','T','C','T','T','G','A','A','G','T','G','C','T','T','A','A','A','G','A','A','G','C','C','T','T','C','A','A',
 	'C','T','A','A','G','T','G','A','T','T','A','C','A','C','T','G','C','T','A','A','G','A','G','A','T','G','A','A','G','C','A','T','T','G','C',
 	'A','C','C','C','A','C','C','G','A','C']
 	
-	def random_mutation():
-		pass
+	def random_mutation(original_g):
+		
+		mutation_rate = 2
+		indexes_to_mutate = []
 
+		for i in xrange(0,mutation_rate):
+			index = random.randint(0,len(original_g)-1)
+			indexes_to_mutate.append(index)
+
+		for i in xrange(0,len(original_g)):
+			for j in indexes_to_mutate:
+				if i == j:
+					if original_g[i] == 'A':
+						pass
+					elif original_g[i] == 'T':
+						pass
+					elif original_g[i] == 'C':
+						pass
+					elif original_g[i] == 'G':
+						pass
+
+	def check_genomes(original_g, mutated_g):
+		
+		print "Original Genome", original_g
+		print "Mutated Genome", mutated_g
+
+		random_mutation_indexes = []
+		random_mutation_values = []
+
+		for i, (or_g, mut_g) in enumerate(zip(original_g, mutated_g)):
+			if or_g != mut_g:
+				random_mutation_values.append(mut_g)
+				random_mutation_indexes.append(i) 
+
+		print "Mutated components", random_mutation_values
+		print "Position", random_mutation_indexes
+
+		return random_mutation_values, random_mutation_indexes
+
+	def message_mutation():
+		pass
 
 	def read_sequence():
 
@@ -56,6 +94,12 @@ class DNA_Analysis(object):
 
 	if __name__ == '__main__':
 
-		genome = read_sequence()
+		original_g = ['A','T','T','C','G','T']
+		mutated_g = random_mutation(original_g)
+		mutated_g = ['T','T','T','C','T','T']
 
+		check_genomes(original_g, mutated_g)
+
+		genome = read_sequence()
 		inserted_genome = insert_message(genome, message)
+
