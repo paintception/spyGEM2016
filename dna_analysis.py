@@ -36,9 +36,7 @@ class DNA_Analysis():
 		print "Indexes to mutate", indexes_to_mutate
 
 		for j in indexes_to_mutate:
-				
-			#print "=== Generating the Random Mutations ==="		
-			
+
 			if g[j] == 'A':
 				mutation = random.randint(0,2)
 				if mutation == 0:
@@ -64,7 +62,7 @@ class DNA_Analysis():
 				elif mutation == 1:
 					g[j] = 'T'
 				elif mutation == 2:
-					g[j] = 'G'
+						g[j] = 'G'
 
 			elif g[j] == 'G':
 				mutation = random.randint(0,2)
@@ -77,7 +75,7 @@ class DNA_Analysis():
 		
 		g = [x.upper() for x in g]
 
-		return g
+		return g, indexes_to_mutate
 
 	def check_genomes(original_g, mutated_g):
 		
@@ -125,16 +123,29 @@ class DNA_Analysis():
 
 		genome = [x.upper() for x in genome] 
 
-		return genome
+		return genome, starting_index, ending_index
+
+
+	def check_message_indexes(message_indexes, mutation_indexes):
+		
+		print "Location of the Message", message_indexes
+		print "Location of the Random Mutations", mutation_indexes
+		
 
 	if __name__ == '__main__':
 		
+		message_indexes = []
+
 		genome = read_sequence()
 		
-		inserted_genome = insert_message(genome, message)
+		inserted_genome, start_message_index, stop_message_index = insert_message(genome, message)
 		intact_inserted_genome = copy.copy(inserted_genome)
-		mutated_genome = random_mutation(inserted_genome)
+		mutated_genome, mutation_indexes = random_mutation(inserted_genome)
 		check_genomes(intact_inserted_genome, mutated_genome)
-	
+		
+		message_indexes.append(start_message_index)
+		message_indexes.append(stop_message_index)
+		
+		check_message_indexes(message_indexes,mutation_indexes)
 
 
