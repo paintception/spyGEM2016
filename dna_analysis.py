@@ -33,49 +33,51 @@ class DNA_Analysis():
 			index = random.randint(0,len(g)-1)
 			indexes_to_mutate.append(index)
 
-		for i in xrange(0,len(g)):
-			for j in indexes_to_mutate:
+		print "Indexes to mutate", indexes_to_mutate
+
+		for j in indexes_to_mutate:
 				
-				print "=== Generating the Random Mutations ==="		
+			#print "=== Generating the Random Mutations ==="		
+			
+			if g[j] == 'A':
+				mutation = random.randint(0,2)
+				if mutation == 0:
+					g[j] = 'T'
+				elif mutation == 1:
+					g[j] = 'C'
+				elif mutation == 2:
+					g[j] = 'G'
 
-				if i == j:
-					if g[i] == 'A':
-						mutation = random.randint(0,2)
-						if mutation == 0:
-							g[i] = 'T'
-						elif mutation == 1:
-							g[i] = 'C'
-						elif mutation == 2:
-							g[i] = 'G'
+			elif g[j] == 'T':
+				mutation = random.randint(0,2)
+				if mutation == 0:
+					g[j] = 'A'
+				elif mutation == 1:
+					g[j] = 'C'
+				elif mutation == 2:
+					g[j] = 'G'
 
-					elif g[i] == 'T':
-						mutation = random.randint(0,2)
-						if mutation == 0:
-							g[i] = 'A'
-						elif mutation == 1:
-							g[i] = 'C'
-						elif mutation == 2:
-							g[i] = 'G'
+			elif g[j] == 'C':
+				mutation = random.randint(0,2)
+				if mutation == 0:
+					g[j] = 'A'
+				elif mutation == 1:
+					g[j] = 'T'
+				elif mutation == 2:
+					g[j] = 'G'
+
+			elif g[j] == 'G':
+				mutation = random.randint(0,2)
+				if mutation == 0:
+					g[j] = 'A'
+				elif mutation == 1:
+					g[j] = 'C'
+				elif mutation == 2:
+					g[j] = 'T'
 		
-					elif g[i] == 'C':
-						mutation = random.randint(0,2)
-						if mutation == 0:
-							g[i] = 'A'
-						elif mutation == 1:
-							g[i] = 'T'
-						elif mutation == 2:
-							g[i] = 'G'
-	
-					elif g[i] == 'G':
-						mutation = random.randint(0,2)
-						if mutation == 0:
-							g[i] = 'A'
-						elif mutation == 1:
-							g[i] = 'C'
-						elif mutation == 2:
-							g[i] = 'T'
-		
-				return g
+		g = [x.upper() for x in g]
+
+		return g
 
 	def check_genomes(original_g, mutated_g):
 		
@@ -121,24 +123,18 @@ class DNA_Analysis():
 		
 		print "=== Inserting the Message into the DNA ==="
 
+		genome = [x.upper() for x in genome] 
+
 		return genome
 
 	if __name__ == '__main__':
 		
-		"""
-		orig_g = ['A','T','T','C','G','T']
-		intact_genome = copy.copy(orig_g)
-		mutat_g = random_mutation(orig_g)
-		print "Original Genome After", intact_genome
-		print "Mutated Genome", mutat_g		
-		check_genomes(intact_genome, mutat_g)
-		"""
 		genome = read_sequence()
 		
 		inserted_genome = insert_message(genome, message)
 		intact_inserted_genome = copy.copy(inserted_genome)
 		mutated_genome = random_mutation(inserted_genome)
 		check_genomes(intact_inserted_genome, mutated_genome)
-
+	
 
 
