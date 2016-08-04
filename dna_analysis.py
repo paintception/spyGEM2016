@@ -1,9 +1,10 @@
 import numpy as np 
 import random
+import copy
 from matplotlib import pyplot as plt
 
 
-class DNA_Analysis(object):
+class DNA_Analysis():
 	
 	message = ['G','A','C','C','A','A','G','C','C','T','G','C','A','A','A','A','A','C','A','A','A','G','T','G','C','A','A','A','G','A','T',
 	'A','T','C','A','G','T','A','A','G','G','T','C','T','T','A','A','A','G','G','C','C','G','A','A','G','C','G','G','T','G','G','C','C','T',
@@ -71,7 +72,7 @@ class DNA_Analysis(object):
 						elif mutation == 1:
 							g[i] = 'C'
 						elif mutation == 2:
-							g[i] = 'T'	
+							g[i] = 'T'
 		return g
 
 	def check_genomes(original_g, mutated_g):
@@ -84,15 +85,15 @@ class DNA_Analysis(object):
 				random_mutation_values.append(mut_g)
 				random_mutation_indexes.append(i) 
 
-		#print "Mutated components", random_mutation_values
-		#print "Position", random_mutation_indexes
+		print "Mutated components", random_mutation_values
+		print "Position", random_mutation_indexes
 
 		return random_mutation_values, random_mutation_indexes	#important for checking if the indexes are the same ones of where the message is placed
 
-	def message_mutation():
+	def message_mutation():		#TODO
 		pass
 
-	def read_sequence():
+	def read_sequence():	#Original Bacteria DNA sequence
 
 	    genome = []
 
@@ -121,11 +122,13 @@ class DNA_Analysis(object):
 
 	if __name__ == '__main__':
 
-		original_g = ['A','T','T','C','G','T']
-		mutated_g = random_mutation(original_g)
+		orig_g = ['A','T','T','C','G','T']
+		intact_genome = copy.copy(orig_g)
+		mutat_g = random_mutation(orig_g)
+		print "Original Genome After", intact_genome
+		print "Mutated Genome", mutat_g		
+		check_genomes(intact_genome, mutat_g)
 
-		check_genomes(original_g, mutated_g)
-
-		genome = read_sequence()
-		inserted_genome = insert_message(genome, message)
+		#genome = read_sequence()
+		#inserted_genome = insert_message(genome, message)
 
