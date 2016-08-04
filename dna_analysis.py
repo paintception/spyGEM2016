@@ -25,8 +25,6 @@ class DNA_Analysis():
 	'A','C','C','C','A','C','C','G','A','C']
 	
 	def random_mutation(g):		#Random Mutation works TODO implement the causes of the mutation rate
-
-		print "Genome to modify", g
 		
 		mutation_rate = 2
 		indexes_to_mutate = []
@@ -37,6 +35,9 @@ class DNA_Analysis():
 
 		for i in xrange(0,len(g)):
 			for j in indexes_to_mutate:
+				
+				print "=== Generating the Random Mutations ==="		
+
 				if i == j:
 					if g[i] == 'A':
 						mutation = random.randint(0,2)
@@ -73,7 +74,8 @@ class DNA_Analysis():
 							g[i] = 'C'
 						elif mutation == 2:
 							g[i] = 'T'
-		return g
+		
+				return g
 
 	def check_genomes(original_g, mutated_g):
 		
@@ -90,9 +92,6 @@ class DNA_Analysis():
 
 		return random_mutation_values, random_mutation_indexes	#important for checking if the indexes are the same ones of where the message is placed
 
-	def message_mutation():		#TODO
-		pass
-
 	def read_sequence():	#Original Bacteria DNA sequence
 
 	    genome = []
@@ -105,9 +104,11 @@ class DNA_Analysis():
 	    for i in g:
 	    	genome.append(i)
 
+	    print "=== Importing Bacillus Subtilis DNA ==="
+
 	    return genome
 
-	def insert_message(genome, message):
+	def insert_message(genome, message):	#Message is there!
 		
 		starting_index = random.randint(0, len(genome)-1)
 		
@@ -118,17 +119,26 @@ class DNA_Analysis():
 		
 		genome[starting_index:ending_index] = message
 		
+		print "=== Inserting the Message into the DNA ==="
+
 		return genome
 
 	if __name__ == '__main__':
-
+		
+		"""
 		orig_g = ['A','T','T','C','G','T']
 		intact_genome = copy.copy(orig_g)
 		mutat_g = random_mutation(orig_g)
 		print "Original Genome After", intact_genome
 		print "Mutated Genome", mutat_g		
 		check_genomes(intact_genome, mutat_g)
+		"""
+		genome = read_sequence()
+		
+		inserted_genome = insert_message(genome, message)
+		intact_inserted_genome = copy.copy(inserted_genome)
+		mutated_genome = random_mutation(inserted_genome)
+		check_genomes(intact_inserted_genome, mutated_genome)
 
-		#genome = read_sequence()
-		#inserted_genome = insert_message(genome, message)
+
 
