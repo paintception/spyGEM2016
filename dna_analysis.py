@@ -1,11 +1,12 @@
 import numpy as np 
 import random
 import copy
-from matplotlib import pyplot as plt
 
-
-class DNA_Analysis():
+class DNA_Analysist():
 	
+	#TODO would be nice to check the longest message possible that avoids random mutations
+	#TODO different random mutation probabilities according to where the DNA is sequenced
+
 	message = ['G','A','C','C','A','A','G','C','C','T','G','C','A','A','A','A','A','C','A','A','A','G','T','G','C','A','A','A','G','A','T',
 	'A','T','C','A','G','T','A','A','G','G','T','C','T','T','A','A','A','G','G','C','C','G','A','A','G','C','G','G','T','G','G','C','C','T',
 	'A','A','G','A','T','A','A','A','A','C','T','G','G','G','C','G','C','C','C','T','G','G','C','G','T','T','A','G','T','T','C','C','G','C',
@@ -24,16 +25,23 @@ class DNA_Analysis():
 	'C','T','A','A','G','T','G','A','T','T','A','C','A','C','T','G','C','T','A','A','G','A','G','A','T','G','A','A','G','C','A','T','T','G','C',
 	'A','C','C','C','A','C','C','G','A','C']
 	
+	def plots(simulations, mutations):
+		
+		from matplotlib import pyplot as plt 
+
+		plt.plot(simulations, mutations)
+		plt.show()
+
 	def random_mutation(g):		#Random Mutation works TODO implement the causes of the mutation rate
 		
-		mutation_rate = 2
+		mutation_rate = 5000		#Will be a percentage given by the literature
 		indexes_to_mutate = []
 
 		for i in xrange(0,mutation_rate):
 			index = random.randint(0,len(g)-1)
 			indexes_to_mutate.append(index)
 
-		print "Indexes to mutate", indexes_to_mutate
+		#print "Indexes to mutate", indexes_to_mutate
 
 		for j in indexes_to_mutate:
 
@@ -87,8 +95,8 @@ class DNA_Analysis():
 				random_mutation_values.append(mut_g)
 				random_mutation_indexes.append(i) 
 
-		print "Mutated components", random_mutation_values
-		print "Position", random_mutation_indexes
+		#print "Mutated components", random_mutation_values
+		#print "Position", random_mutation_indexes
 
 		return random_mutation_values, random_mutation_indexes	#important for checking if the indexes are the same ones of where the message is placed
 
@@ -104,7 +112,7 @@ class DNA_Analysis():
 	    for i in g:
 	    	genome.append(i)
 
-	    print "=== Importing Bacillus Subtilis DNA ==="
+	    print "... Importing Bacillus Subtilis DNA ..."
 
 	    return genome
 
@@ -119,7 +127,7 @@ class DNA_Analysis():
 		
 		genome[starting_index:ending_index] = message
 		
-		print "=== Inserting the Message into the DNA ==="
+		print "... Inserting the Message into the DNA ..."
 
 		genome = [x.upper() for x in genome] 
 
@@ -127,25 +135,49 @@ class DNA_Analysis():
 
 
 	def check_message_indexes(message_indexes, mutation_indexes):
+
+		n_random_mutations = 0
+
+		for i in xrange(message_indexes[0], message_indexes[1]):
+			for j in mutation_indexes:
+				if i==j:
+					print "A Random Mutation in the Message Occured!"
+					n_random_mutations += 1
 		
-		print "Location of the Message", message_indexes
-		print "Location of the Random Mutations", mutation_indexes
-		
+		print "Number of Random Mutations", n_random_mutations
+		print "------------------------------------------------"
+
+		return n_random_mutations
 
 	if __name__ == '__main__':
 		
-		message_indexes = []
+		number_simulations = 10
 
-		genome = read_sequence()
-		
-		inserted_genome, start_message_index, stop_message_index = insert_message(genome, message)
-		intact_inserted_genome = copy.copy(inserted_genome)
-		mutated_genome, mutation_indexes = random_mutation(inserted_genome)
-		check_genomes(intact_inserted_genome, mutated_genome)
-		
-		message_indexes.append(start_message_index)
-		message_indexes.append(stop_message_index)
-		
-		check_message_indexes(message_indexes,mutation_indexes)
+		simulations_counter = []
+		mutations_counter = []
 
+		for i in xrange(0, number_simulations):
+			
+			print "Running Simulation:", i
+
+			simulations_counter.append(i)
+			
+			message_indexes = []
+
+			genome = read_sequence()
+			
+			inserted_genome, start_message_index, stop_message_index = insert_message(genome, message)
+			intact_inserted_genome = copy.copy(inserted_genome)
+			print "Length of the total genome", len(intact_inserted_genome)
+
+			mutated_genome, mutation_indexes = random_mutation(inserted_genome)
+			check_genomes(intact_inserted_genome, mutated_genome)
+			
+			message_indexes.append(start_message_index)
+			message_indexes.append(stop_message_index)
+			
+			amount_mutations = check_message_indexes(message_indexes,mutation_indexes)
+			mutations_counter.append(amount_mutations)
+
+		plots(simulations_counter, mutations_counter)
 
