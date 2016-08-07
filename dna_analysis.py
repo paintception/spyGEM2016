@@ -27,14 +27,19 @@ class DNA_Analysist():
 	
 	def plots(simulations, mutations):
 		
-		from matplotlib import pyplot as plt 
+		import seaborn as sbn
+		from matplotlib import pyplot as plt
+		from scipy.optimize import leastsq 
 
-		plt.plot(simulations, mutations)
+		plt.bar(simulations, mutations)
+		plt.ylabel('Occurance of Random Mutations')
+		plt.xlabel('Length of the Message')
+		plt.title('Random Mutations in Bacillus Subtilis')
 		plt.show()
 
 	def random_mutation(g):		#Random Mutation works TODO implement the causes of the mutation rate
 		
-		mutation_rate = 5000		#Will be a percentage given by the literature
+		mutation_rate = 5	#Will be a percentage given by the literature 4.2 is given by Carlos paper. Number of indexes that will mutate
 		indexes_to_mutate = []
 
 		for i in xrange(0,mutation_rate):
@@ -129,7 +134,7 @@ class DNA_Analysist():
 		
 		print "... Inserting the Message into the DNA ..."
 
-		genome = [x.upper() for x in genome] 
+		genome = [x.upper() for x in genome]
 
 		return genome, starting_index, ending_index
 
@@ -152,24 +157,24 @@ class DNA_Analysist():
 	if __name__ == '__main__':
 		
 		number_simulations = 10
-
 		simulations_counter = []
 		mutations_counter = []
 
-		for i in xrange(0, number_simulations):
-			
+		i = 1
+		
+		for i in xrange(1, number_simulations):
+		#while True:
 			print "Running Simulation:", i
-
+			message = message * i
 			simulations_counter.append(i)
 			
 			message_indexes = []
 
 			genome = read_sequence()
-			
+
 			inserted_genome, start_message_index, stop_message_index = insert_message(genome, message)
 			intact_inserted_genome = copy.copy(inserted_genome)
-			print "Length of the total genome", len(intact_inserted_genome)
-
+			print "Length of the message inserted in the genome", len(message)
 			mutated_genome, mutation_indexes = random_mutation(inserted_genome)
 			check_genomes(intact_inserted_genome, mutated_genome)
 			
@@ -178,6 +183,11 @@ class DNA_Analysist():
 			
 			amount_mutations = check_message_indexes(message_indexes,mutation_indexes)
 			mutations_counter.append(amount_mutations)
+			
+			#if amount_mutations != 0:
+				#break
+
+			i+=1
 
 		plots(simulations_counter, mutations_counter)
 
