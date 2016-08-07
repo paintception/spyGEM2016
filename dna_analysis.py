@@ -162,8 +162,8 @@ class DNA_Analysist():
 
 		i = 1
 		
-		for i in xrange(1, number_simulations):
-		#while True:
+		#for i in xrange(1, number_simulations):
+		while True:
 			print "Running Simulation:", i
 			message = message * i
 			simulations_counter.append(i)
@@ -184,8 +184,8 @@ class DNA_Analysist():
 			amount_mutations = check_message_indexes(message_indexes,mutation_indexes)
 			mutations_counter.append(amount_mutations)
 			
-			#if amount_mutations != 0:
-				#break
+			if amount_mutations != 0:
+				break
 
 			i+=1
 
