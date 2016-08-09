@@ -33,7 +33,7 @@ class DNA_Analysist():
 
 		plt.bar(simulations, mutations)
 		plt.ylabel('Occurance of Random Mutations')
-		plt.xlabel('Length of the Message')
+		plt.xlabel('Amount of Simulations')
 		plt.title('Random Mutations in Bacillus Subtilis')
 		plt.show()
 
@@ -156,9 +156,10 @@ class DNA_Analysist():
 
 	if __name__ == '__main__':
 		
-		number_simulations = 10
+		number_simulations = 100
 		simulations_counter = []
 		mutations_counter = []
+		message_length = []
 
 		i = 1
 		
@@ -175,6 +176,9 @@ class DNA_Analysist():
 			inserted_genome, start_message_index, stop_message_index = insert_message(genome, message)
 			intact_inserted_genome = copy.copy(inserted_genome)
 			print "Length of the message inserted in the genome", len(message)
+
+			message_length.append(len(message))
+
 			mutated_genome, mutation_indexes = random_mutation(inserted_genome)
 			check_genomes(intact_inserted_genome, mutated_genome)
 			
@@ -183,10 +187,9 @@ class DNA_Analysist():
 			
 			amount_mutations = check_message_indexes(message_indexes,mutation_indexes)
 			mutations_counter.append(amount_mutations)
-			
+
 			if amount_mutations != 0:
 				break
-
 			i+=1
 
 		plots(simulations_counter, mutations_counter)
