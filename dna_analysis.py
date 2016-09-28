@@ -4,9 +4,6 @@ import copy
 
 class DNA_Analysist():
 	
-	#TODO would be nice to check the longest message possible that avoids random mutations
-	#TODO different random mutation probabilities according to where the DNA is sequenced
-
 	message = ['G','A','C','C','A','A','G','C','C','T','G','C','A','A','A','A','A','C','A','A','A','G','T','G','C','A','A','A','G','A','T',
 	'A','T','C','A','G','T','A','A','G','G','T','C','T','T','A','A','A','G','G','C','C','G','A','A','G','C','G','G','T','G','G','C','C','T',
 	'A','A','G','A','T','A','A','A','A','C','T','G','G','G','C','G','C','C','C','T','G','G','C','G','T','T','A','G','T','T','C','C','G','C',
@@ -37,9 +34,9 @@ class DNA_Analysist():
 		plt.title('Random Mutations in Bacillus Subtilis')
 		plt.show()
 
-	def random_mutation(g):		#Random Mutation works TODO implement the causes of the mutation rate
+	def random_mutation(g):	
 		
-		mutation_rate = 5	#Will be a percentage given by the literature 4.2 is given by Carlos paper. Number of indexes that will mutate
+		mutation_rate = 2
 		indexes_to_mutate = []
 
 		for i in xrange(0,mutation_rate):
@@ -138,7 +135,6 @@ class DNA_Analysist():
 
 		return genome, starting_index, ending_index
 
-
 	def check_message_indexes(message_indexes, mutation_indexes):
 
 		n_random_mutations = 0
@@ -155,15 +151,14 @@ class DNA_Analysist():
 		return n_random_mutations
 
 	if __name__ == '__main__':
-		
-		number_simulations = 100
+
 		simulations_counter = []
 		mutations_counter = []
 		message_length = []
 
 		i = 1
 		
-		#for i in xrange(1, number_simulations):
+		#for i in xrange(1, 1000):
 		while True:
 			print "Running Simulation:", i
 			message = message * i
